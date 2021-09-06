@@ -1,0 +1,12 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+extend type Query {
+  search(w : String!): [Content!]
+}
+
+type Content @key(fields: "id") {
+  id: ID!
+  ContentType: String!
+}
