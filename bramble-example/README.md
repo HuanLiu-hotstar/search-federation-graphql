@@ -7,6 +7,7 @@
 - cd bramble-example/second-service && make && ./second-service
 - cd bramble-example && bramble -conf config2.json
 
+- use curl to send a query to gateway
 
 ```sh
 curl -H "content-type: application/json" -X POST http://localhost:8082/query -d '{"query":"{randomFoo{id gqlgen hello world}}"}' |jq
@@ -24,6 +25,35 @@ response:
   }
 }
 
+```
+
+- we can also open playground `http://localhost:8082/playground`
+
+```graphql
+
+# Write your query or mutation here
+{
+  randomFoo{
+    id
+    gqlgen
+    world
+    hello
+    someone
+  }
+}
+# response
+
+{
+  "data": {
+    "randomFoo": {
+      "id": "36",
+      "gqlgen": true,
+      "world": "hello_36",
+      "hello": "world_36",
+      "someone": "someone_36"
+    }
+  }
+}
 ```
 
 ## Schema definition
