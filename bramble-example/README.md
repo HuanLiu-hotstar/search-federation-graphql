@@ -2,6 +2,7 @@
 
 ## how to run 
 
+- install bramble plz reference this repo https://github.com/movio/bramble
 - cd bramble-example/first-service && make && ./first-service
 - cd bramble-example/second-service && make && ./second-service
 - cd bramble-example && bramble -conf config2.json
