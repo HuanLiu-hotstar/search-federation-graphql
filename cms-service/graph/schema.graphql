@@ -1,0 +1,43 @@
+
+
+
+interface SearchResultBase {
+  id: ID!
+  contentID: String!
+  contentType: String!
+}
+
+type MetaData {
+  url: String!
+  title: String!
+}
+type Cms implements SearchResultBase{
+  id: ID! 
+  contentID: String!
+  contentType: String!
+  meta_data: MetaData! 
+}
+type Team {
+  name: String!
+  score: Int!
+}
+type ScoreData {
+  title: String!
+  team: [Team!]
+}
+type ScoreCard implements SearchResultBase {
+  id: ID! 
+  contentID: String!
+  contentType: String!
+  score_card_data: ScoreData! 
+}
+
+extend type Content @key(fields: "id") {
+  id: ID! @external
+  result: [SearchResultBase!]
+}
+
+# type Query {
+#   Match(id: String!):ScoreCard
+# }
+
