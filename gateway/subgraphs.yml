@@ -1,0 +1,12 @@
+subgraphs:
+  search:
+    routing_url: http://localhost:4002/query
+    schema:
+      file: ../search/graph/schema.graphql
+  cms:
+    routing_url: http://localhost:4001/query
+    schema:
+      file: ../cms-service/graph/schema.graphql
+# compose supergraph and use it in main.js
+# rover supergraph compose --config ./supergraph.yaml
+

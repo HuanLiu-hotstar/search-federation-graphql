@@ -1,0 +1,72 @@
+schema
+  @core(feature: "https://specs.apollo.dev/core/v0.1"),
+  @core(feature: "https://specs.apollo.dev/join/v0.1")
+{
+  query: Query
+}
+
+directive @core(feature: String!) repeatable on SCHEMA
+
+directive @join__field(graph: join__Graph, requires: join__FieldSet, provides: join__FieldSet) on FIELD_DEFINITION
+
+directive @join__type(graph: join__Graph!, key: join__FieldSet) repeatable on OBJECT | INTERFACE
+
+directive @join__owner(graph: join__Graph!) on OBJECT | INTERFACE
+
+directive @join__graph(name: String!, url: String!) on ENUM_VALUE
+
+type Cms implements SearchResultBase {
+  contentID: String!
+  contentType: String!
+  id: ID!
+  meta_data: MetaData!
+}
+
+type Content
+  @join__owner(graph: SEARCH)
+  @join__type(graph: SEARCH, key: "id")
+  @join__type(graph: CMS, key: "id")
+{
+  ContentType: String! @join__field(graph: SEARCH)
+  id: ID! @join__field(graph: SEARCH)
+  result: [SearchResultBase!] @join__field(graph: CMS)
+}
+
+scalar join__FieldSet
+
+enum join__Graph {
+  CMS @join__graph(name: "cms" url: "http://localhost:4001/query")
+  SEARCH @join__graph(name: "search" url: "http://localhost:4002/query")
+}
+
+type MetaData {
+  title: String!
+  url: String!
+}
+
+type Query {
+  search(w: String!): [Content!] @join__field(graph: SEARCH)
+}
+
+type ScoreCard implements SearchResultBase {
+  contentID: String!
+  contentType: String!
+  id: ID!
+  score_card_data: ScoreData!
+}
+
+type ScoreData {
+  team: [Team!]
+  title: String!
+}
+
+interface SearchResultBase {
+  contentID: String!
+  contentType: String!
+  id: ID!
+}
+
+type Team {
+  name: String!
+  score: Int!
+}
