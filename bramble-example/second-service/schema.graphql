@@ -16,6 +16,13 @@ type Query {
   # the service is first registered
   service: Service!
   foo(id: ID!): Foo @boundary
+  bar(id: ID!): Bar @boundary
+}
+
+type Bar @boundary {
+  id: ID!
+  age: Int!
+  myname: String!
 }
 
 type Foo @boundary {
@@ -26,4 +33,5 @@ type Foo @boundary {
   # A field provided by this service
   hello: String!
   world: String!
+  someone: String!
 }

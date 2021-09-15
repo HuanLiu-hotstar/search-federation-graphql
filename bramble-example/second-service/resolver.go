@@ -2,6 +2,8 @@ package main
 
 import (
 	"context"
+	"log"
+	"math/rand"
 	"strings"
 
 	"github.com/vektah/gqlparser/v2/formatter"
@@ -33,11 +35,20 @@ func (r *queryResolver) Foo(ctx context.Context, id string) (*Foo, error) {
 	f := fetchFooData(id)
 	return &f, nil
 }
+func (r *queryResolver) Bar(ctx context.Context, id string) (*Bar, error) {
+	log.Printf("fetch age data %s", id)
+	return &Bar{
+		ID:     id,
+		Age:    rand.Intn(20) + 10,
+		Myname: "huan-" + id,
+	}, nil
+}
 
 func fetchFooData(id string) Foo {
 	return Foo{
-		ID:    id,
-		Hello: "world_" + id,
-		World: "hello_" + id,
+		ID:      id,
+		Hello:   "world_" + id,
+		World:   "hello_" + id,
+		Someone: "someone_" + id,
 	}
 }

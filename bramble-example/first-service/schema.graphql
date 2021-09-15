@@ -18,16 +18,23 @@ type Query {
 
   # example Foo type
   foo(id: ID!): Foo @boundary
+  bar(id: ID!): Bar @boundary
 
   # give me a Foo object
   randomFoo: Foo!
 }
-
+type Bar @boundary {
+  id: ID!
+  name: String!
+}
 type Foo @boundary {
   # required by all services that add a field to
   # the Foo type
   id: ID!
+  
 
   # A field provided by this service
   gqlgen: Boolean!
+
+  bar: Bar!
 }
