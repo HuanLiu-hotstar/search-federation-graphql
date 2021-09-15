@@ -39,18 +39,29 @@ response:
     world
     hello
     someone
+    bar{
+      id
+      name
+      age
+      myname
+    }
   }
 }
 # response
-
 {
   "data": {
     "randomFoo": {
-      "id": "36",
+      "id": "80",
       "gqlgen": true,
-      "world": "hello_36",
-      "hello": "world_36",
-      "someone": "someone_36"
+      "world": "hello_80",
+      "hello": "world_80",
+      "someone": "someone_80",
+      "bar": {
+        "id": "bar-80",
+        "name": "bar",
+        "age": 21,
+        "myname": "huan-bar-80"
+      }
     }
   }
 }
@@ -81,19 +92,27 @@ type Query {
 
   # example Foo type
   foo(id: ID!): Foo @boundary
+  bar(id: ID!): Bar @boundary
 
   # give me a Foo object
   randomFoo: Foo!
 }
-
+type Bar @boundary {
+  id: ID!
+  name: String!
+}
 type Foo @boundary {
   # required by all services that add a field to
   # the Foo type
   id: ID!
+  
 
   # A field provided by this service
   gqlgen: Boolean!
+
+  bar: Bar!
 }
+
 
 ```
 
@@ -118,6 +137,13 @@ type Query {
   # the service is first registered
   service: Service!
   foo(id: ID!): Foo @boundary
+  bar(id: ID!): Bar @boundary
+}
+
+type Bar @boundary {
+  id: ID!
+  age: Int!
+  myname: String!
 }
 
 type Foo @boundary {
@@ -128,6 +154,8 @@ type Foo @boundary {
   # A field provided by this service
   hello: String!
   world: String!
+  someone: String!
 }
+
 
 ```
